@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link th:replace="~{ fragments :: bootstrap}">
+    <title>Pizzas Index</title>
+</head>
+
+<body>
+    <div class="container pt-3">
+
+        <h1 class="text-center">Lista delle pizze</h1>
+        <form th:action="@{/pizzas}" method="get" class="mb-4">
+            <div class="input-group">
+                <input type="text" name="search" class="form-control" th:value="${param.search}">
+                <button type="submit" class="btn btn-light border-black border">Search</button>
+            </div>
+        </form>
+
+        <table class="table" th:if="${pizzas.size() > 0}">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="pizza : ${pizzas}" th:object="${pizza}">
+                    <td scope="col">
+                        <a th:href="@{/pizzas/{id}(id=*{id})}" class="text-decoration-underline fw-bold">[[*{name}]]</a>
+                    </td>
+                    <td scope="col">[[*{description}]]</td>
+                    <td scope="col">[[*{price}]]$</td>
+
+                </tr>
+            </tbody>
+        </table>
+        <div th:unless="${pizzas.size() > 0}">
+            <p>No pizzas available at the moment.</p>
+        </div>
+    </div>
+</body>
+<link th:replace="~{ fragments :: scripts}">
+
+</html>
