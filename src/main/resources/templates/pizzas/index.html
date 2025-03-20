@@ -7,9 +7,11 @@
 </head>
 
 <body>
+    <link th:replace="~{ fragments :: navbar}">
+
     <div class="container pt-3">
 
-        <h1 class="text-center">Lista delle pizze</h1>
+        <h1 class="text-center">Pizzas</h1>
         <form th:action="@{/pizzas}" method="get" class="mb-4">
             <div class="input-group">
                 <input type="text" name="search" class="form-control" th:value="${param.search}">
@@ -17,25 +19,23 @@
             </div>
         </form>
 
-        <table class="table" th:if="${pizzas.size() > 0}">
-            <thead>
-                <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Price</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr th:each="pizza : ${pizzas}" th:object="${pizza}">
-                    <td scope="col">
-                        <a th:href="@{/pizzas/{id}(id=*{id})}" class="text-decoration-underline fw-bold">[[*{name}]]</a>
-                    </td>
-                    <td scope="col">[[*{description}]]</td>
-                    <td scope="col">[[*{price}]]$</td>
+        <div th:if="${pizzas.size() > 0}">
+            <div class="d-flex flex-wrap">
+                <div th:each="pizza : ${pizzas}" th:object="${pizza}" class="card" style="width: 18rem; margin: 10px;">
+                    <img src="[[*{photoUrl}]]" class="card-img-top" srcset="https://placehold.co/600x400"
+                        alt="Image not available">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <a th:href="@{/pizzas/{id}(id=*{id})}"
+                                class="text-decoration-underline fw-bold card-title fs-5">[[*{name}]]</a>
+                            <h5 class="card-title"> [[*{price}]]$</h5>
+                        </div>
+                        <p class="card-text">[[*{description}]]</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                </tr>
-            </tbody>
-        </table>
         <div th:unless="${pizzas.size() > 0}">
             <p>No pizzas available at the moment.</p>
         </div>

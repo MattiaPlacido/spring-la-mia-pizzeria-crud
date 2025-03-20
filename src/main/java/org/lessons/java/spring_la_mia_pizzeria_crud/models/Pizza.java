@@ -1,5 +1,6 @@
 package org.lessons.java.spring_la_mia_pizzeria_crud.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,15 +21,18 @@ public class Pizza {
 	private Integer id;
 
 	@NotBlank(message = "The name must no be null, empty or blank.")
+	@Column(nullable = false)
 	private String name;
 
 	@Lob
 	@NotBlank(message = "The description must no be null, empty or blank.")
+	@Column(nullable = false)
 	private String description;
 
 	private String photoUrl;
 
 	@NotNull
+	@Column(nullable = false)
 	@DecimalMin(value = "0.1", message = "Price must be greater than 0")
 	private Double price;
 
