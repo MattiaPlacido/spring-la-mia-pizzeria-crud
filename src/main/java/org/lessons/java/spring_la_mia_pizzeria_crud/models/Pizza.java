@@ -10,6 +10,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "pizzas")
@@ -20,7 +21,8 @@ public class Pizza {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@NotBlank(message = "The name must no be null, empty or blank.")
+	@NotBlank(message = "The name must not be null, empty or blank.")
+	@Size(max = 30, message = "The name must not be longer than 30 characters.")
 	@Column(nullable = false)
 	private String name;
 
@@ -29,11 +31,13 @@ public class Pizza {
 	@Column(nullable = false)
 	private String description;
 
-	private String photoUrl;
-
 	@NotNull
 	@Column(nullable = false)
-	@DecimalMin(value = "0.1", message = "Price must be greater than 0")
+	private String photoUrl;
+
+	@NotNull(message = "Price must not be null and greater than 0.")
+	@Column(nullable = false)
+	@DecimalMin(value = "0.1", message = "Price must be greater than 0.")
 	private Double price;
 
 	// Getters and setters

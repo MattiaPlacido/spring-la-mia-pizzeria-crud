@@ -32,6 +32,42 @@
                         </div>
                         <p class="card-text">[[*{description}]]</p>
                     </div>
+                    <div class="container pb-3 d-flex justify-content-around">
+                        <a th:href="@{/pizzas/edit/{id}(id=${pizza.id})}" class="btn btn-primary">Update</a>
+
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                            th:data-bs-target="'#delete-modal-' + *{id}">
+                            Delete
+                        </button>
+
+
+
+                        <div class="modal fade" th:id="'delete-modal-' + *{id}" tabindex="-1"
+                            aria-labelledby="delete-modal" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="deleteModalLabel">Delete "[[${pizza.name}]]"</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>Are you sure you want to delete this pizza?</p>
+                                    </div>
+                                    <div class="modal-footer d-flex justify-content-around">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
+
+                                        <form th:action="@{/pizzas/delete/{id}(id=${pizza.id})}" method="post">
+                                            <button class="btn btn-danger" type="submit">Delete</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
                 </div>
             </div>
         </div>
